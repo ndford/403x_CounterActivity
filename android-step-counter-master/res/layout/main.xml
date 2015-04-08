@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <TextView android:textColor="@android:color/white"
+              android:layout_gravity="center_horizontal"
+              android:id="@+id/count1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Segment1 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment2 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment3 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment4 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment5 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment6 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment7 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/count8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segment8 Steps: 0"/>
+        <TextView android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Steps:"/>
+
+    </LinearLayout>
+</LinearLayout>
+
