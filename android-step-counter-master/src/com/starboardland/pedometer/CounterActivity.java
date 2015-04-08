@@ -95,6 +95,7 @@ public class CounterActivity extends Activity implements SensorEventListener {
         if ((end - start) > MIN_IN_MILLIS) {
 
             segmentSteps = (int) event.values[0] - numSteps;
+            segmentSteps = segmentSteps - 1;
             StepsTaken segSteps = new  StepsTaken(segmentSteps);
 
             segSteps.setId(textViewCounter);
@@ -102,7 +103,8 @@ public class CounterActivity extends Activity implements SensorEventListener {
             textViewCounter++;
             start = end;
 
-
+            if (textViewCounter < 9)
+                Toast.makeText(this, "You took " + segmentSteps + " steps in segment " + textViewCounter, Toast.LENGTH_LONG).show();
             db.addStepsTaken(segSteps);
             StepsTaken testDb = db.getStepsTaken(textViewCounter);
             Integer stepsCheck = testDb.getSteps();
