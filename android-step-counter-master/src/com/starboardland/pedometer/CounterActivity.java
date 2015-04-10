@@ -3,14 +3,30 @@ package com.starboardland.pedometer;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.*;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 
-public class CounterActivity extends Activity implements SensorEventListener {
+public class CounterActivity extends Activity implements SensorEventListener, OnMapReadyCallback {
 
     private static final int MIN_IN_MILLIS = 60000;
     private static final int NUM_TEXT_VIEWS = 8;
@@ -22,6 +38,8 @@ public class CounterActivity extends Activity implements SensorEventListener {
     int numSteps = 0;
     private TextView count1, count2, count3, count4, count5, count6, count7, count8, totalCount;
     private TextView[] textViewArray = null;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +72,10 @@ public class CounterActivity extends Activity implements SensorEventListener {
             checkTimePassed = new Date();
             start = checkTimePassed.getTime();
         }
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     }
@@ -96,7 +118,7 @@ public class CounterActivity extends Activity implements SensorEventListener {
 
             segmentSteps = (int) event.values[0] - numSteps;
             segmentSteps = segmentSteps - 1;
-            StepsTaken segSteps = new  StepsTaken(segmentSteps);
+            StepsTaken segSteps = new StepsTaken(segmentSteps);
 
             segSteps.setId(textViewCounter);
 
@@ -110,7 +132,7 @@ public class CounterActivity extends Activity implements SensorEventListener {
             Integer stepsCheck = testDb.getSteps();
             Log.d("Steps from DB: ", stepsCheck.toString());
 
-            numSteps = (int)event.values[0];
+            numSteps = (int) event.values[0];
 
         }
 
@@ -121,7 +143,7 @@ public class CounterActivity extends Activity implements SensorEventListener {
             if (textViewCounter == 8) {
                 int totalSteps = 0;
 
-                for (int i = 1; i < (NUM_TEXT_VIEWS+1); i++) {
+                for (int i = 1; i < (NUM_TEXT_VIEWS + 1); i++) {
                     StepsTaken totalStepsTaken = db.getStepsTaken(i);
                     totalSteps = totalSteps + totalStepsTaken.getSteps();
 
@@ -135,5 +157,21 @@ public class CounterActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        googleMap.setMyLocationEnabled(true);
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        double latitude = myLocation.getLatitude();
+        double longitude = myLocation.getLongitude();
+        LatLng latLng = new LatLng(latitude, longitude);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(18));
     }
 }
